@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickOnceUninstaller", "ClickOnceUninstaller\ClickOnceUninstaller.csproj", "{CE6884BE-105D-4B8A-822B-F1282BE4C826}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickOnceInstaller.CustomAction", "ClickOnceInstaller.CustomAction\ClickOnceInstaller.CustomAction.csproj", "{B96C3680-4EC5-4AA0-8C82-41782B8A884B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClickOnceUninstaller.CustomAction", "ClickOnceUninstaller.CustomAction\ClickOnceUninstaller.CustomAction.csproj", "{B96C3680-4EC5-4AA0-8C82-41782B8A884B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

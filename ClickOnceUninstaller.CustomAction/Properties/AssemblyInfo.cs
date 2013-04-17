@@ -4,10 +4,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClickOnceInstaller.CustomAction")]
+[assembly: AssemblyTitle("ClickOnceUninstaller.CustomAction")]
 [assembly: AssemblyDescription("WiX Custom Action for ClickOnceUninstaller")]
 [assembly: AssemblyCompany("6 Wunderkinder GmbH")]
-[assembly: AssemblyProduct("ClickOnceInstaller")]
+[assembly: AssemblyProduct("ClickOnceUninstaller")]
 [assembly: AssemblyCopyright("Copyright © 6 Wunderkinder GmbH 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

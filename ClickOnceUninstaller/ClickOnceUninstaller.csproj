@@ -8,7 +8,7 @@
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Wunder.ClickOnceUninstaller</RootNamespace>
-    <AssemblyName>ClickOnceUninstaller</AssemblyName>
+    <AssemblyName>Wunder.ClickOnceUninstaller</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

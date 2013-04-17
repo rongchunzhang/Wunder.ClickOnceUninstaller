@@ -8,8 +8,8 @@
     <ProjectGuid>{B96C3680-4EC5-4AA0-8C82-41782B8A884B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wunder.ClickOnceInstaller</RootNamespace>
-    <AssemblyName>ClickOnceInstaller.CustomAction</AssemblyName>
+    <RootNamespace>Wunder.ClickOnceUninstaller</RootNamespace>
+    <AssemblyName>Wunder.ClickOnceUninstaller.CustomAction</AssemblyName>
     <TargetFrameworkVersion>v3.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <WixCATargetsPath Condition=" '$(WixCATargetsPath)' == '' ">$(MSBuildExtensionsPath)\Microsoft\WiX\v3.x\Wix.CA.targets</WixCATargetsPath>

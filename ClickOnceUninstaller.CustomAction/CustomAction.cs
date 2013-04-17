@@ -1,7 +1,6 @@
 ﻿using Microsoft.Deployment.WindowsInstaller;
-using Wunder.ClickOnceUninstaller;
 
-namespace Wunder.ClickOnceInstaller
+namespace Wunder.ClickOnceUninstaller
 {
     public class CustomActions
     {
