@@ -25,7 +25,7 @@ namespace Wunder.ClickOnceUninstaller
             var supportShortcut = Path.Combine(suiteFolder, _uninstallInfo.SupportShortcutFileName + ".url");
 
             var desktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            var desktopShortcut = Path.Combine(desktopFolder, _uninstallInfo.ShortcutFileName);
+            var desktopShortcut = Path.Combine(desktopFolder, _uninstallInfo.ShortcutFileName + ".appref-ms");
 
             _filesToRemove = new List<string>();
             if (File.Exists(shortcut)) _filesToRemove.Add(shortcut);
@@ -48,17 +48,16 @@ namespace Wunder.ClickOnceUninstaller
                 throw new InvalidOperationException("Call Prepare() first.");
 
             var programsFolder = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
-
             Console.WriteLine("Remove start menu entries from " + programsFolder);
 
             foreach (var file in _filesToRemove)
             {
-                Console.WriteLine("Delete file " + file.Substring(programsFolder.Length + 1));
+                Console.WriteLine("Delete file " + file);
             }
 
             foreach (var folder in _foldersToRemove)
             {
-                Console.WriteLine("Delete folder " + folder.Substring(programsFolder.Length + 1));
+                Console.WriteLine("Delete folder " + folder);
             }
 
             Console.WriteLine();
