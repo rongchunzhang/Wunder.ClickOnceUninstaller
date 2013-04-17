@@ -18,8 +18,8 @@ namespace Wunder.ClickOnceUninstaller
         public void Prepare(List<string> componentsToRemove)
         {
             // sanity check
-            if (string.IsNullOrWhiteSpace(_registry.ClickOnceFolder) ||
-                !_registry.ClickOnceFolder.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)))
+            if (string.IsNullOrEmpty(_registry.ClickOnceFolder) ||
+                !_registry.ClickOnceFolder.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)))
                 throw new ArgumentException("Invalid ClickOnce folder: " + _registry.ClickOnceFolder);
 
             _foldersToRemove = new List<string>();

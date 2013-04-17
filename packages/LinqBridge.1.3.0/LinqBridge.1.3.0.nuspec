@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>LinqBridge</id>
+    <version>1.3.0</version>
+    <title>LINQBridge</title>
+    <authors>Atif Aziz</authors>
+    <owners>Atif Aziz</owners>
+    <licenseUrl>http://www.opensource.org/licenses/bsd-license.php</licenseUrl>
+    <projectUrl>http://linqbridge.googlecode.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>With Visual Studio's multi-targeting and LINQBridge, you can write LINQ to Objects (local) queries using the full power of the C# 3.0 compiler and yet create programs that require only Microsoft .NET Framework 2.0. LINQBridge is a re-implementation of all the standard query operators introduced with Microsoft .NET Framework 3.5's System.Linq.Enumerable class.</description>
+    <summary>LINQ to Objects for .NET Framework 2.0</summary>
+    <releaseNotes />
+    <copyright>Copyright (c) 2007 Atif Aziz, Joseph Albahari. All rights reserved.</copyright>
+    <language />
+    <tags>linq</tags>
+    <references>
+      <reference file="LinqBridge.dll" />
+    </references>
+  </metadata>
+</package>

@@ -4,11 +4,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ClickOnceUninstaller")]
-[assembly: AssemblyDescription("Programmatically uninstall ClickOnce deployed apps")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyTitle("ClickOnceInstaller.CustomAction")]
+[assembly: AssemblyDescription("WiX Custom Action for ClickOnceUninstaller")]
 [assembly: AssemblyCompany("6 Wunderkinder GmbH")]
-[assembly: AssemblyProduct("ClickOnceUninstaller")]
+[assembly: AssemblyProduct("ClickOnceInstaller")]
 [assembly: AssemblyCopyright("Copyright © 6 Wunderkinder GmbH 2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +18,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1c6ba063-8962-47a3-8812-648c47d74fec")]
+[assembly: Guid("ab9bf4d7-5620-4b88-9e67-1098ba5269da")]
 
 // Version information for an assembly consists of the following four values:
 //

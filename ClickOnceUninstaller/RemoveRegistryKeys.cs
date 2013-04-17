@@ -15,8 +15,8 @@ namespace Wunder.ClickOnceUninstaller
         private readonly ClickOnceRegistry _registry;
         private readonly UninstallInfo _uninstallInfo;
         private readonly List<IDisposable> _disposables = new List<IDisposable>();
-        private List<Tuple<RegistryKey, string>> _keysToRemove;
-        private List<Tuple<RegistryKey, string>> _valuesToRemove;
+        private List<RegistryMarker> _keysToRemove;
+        private List<RegistryMarker> _valuesToRemove;
 
         public RemoveRegistryKeys(ClickOnceRegistry registry, UninstallInfo uninstallInfo)
         {
@@ -26,15 +26,15 @@ namespace Wunder.ClickOnceUninstaller
 
         public void Prepare(List<string> componentsToRemove)
         {
-            _keysToRemove = new List<Tuple<RegistryKey, string>>();
-            _valuesToRemove = new List<Tuple<RegistryKey, string>>();
+            _keysToRemove = new List<RegistryMarker>();
+            _valuesToRemove = new List<RegistryMarker>();
 
             var componentsKey = Registry.CurrentUser.OpenSubKey(ClickOnceRegistry.ComponentsRegistryPath, true);
             _disposables.Add(componentsKey);
             foreach (var component in _registry.Components)
             {
                 if (componentsToRemove.Contains(component.Key))
-                    _keysToRemove.Add(new Tuple<RegistryKey, string>(componentsKey, component.Key));
+                    _keysToRemove.Add(new RegistryMarker(componentsKey, component.Key));
             }
 
             var marksKey = Registry.CurrentUser.OpenSubKey(ClickOnceRegistry.MarksRegistryPath, true);
@@ -43,7 +43,7 @@ namespace Wunder.ClickOnceUninstaller
             {
                 if (componentsToRemove.Contains(mark.Key))
                 {
-                    _keysToRemove.Add(new Tuple<RegistryKey, string>(marksKey, mark.Key));
+                    _keysToRemove.Add(new RegistryMarker(marksKey, mark.Key));
                 }
                 else
                 {
@@ -55,7 +55,7 @@ namespace Wunder.ClickOnceUninstaller
 
                         foreach (var implication in implications)
                         {
-                            _valuesToRemove.Add(new Tuple<RegistryKey, string>(markKey, implication.Key));
+                            _valuesToRemove.Add(new RegistryMarker(markKey, implication.Key));
                         }
                     }
                 }
@@ -82,7 +82,7 @@ namespace Wunder.ClickOnceUninstaller
             {
                 if (subKeyName.Contains(token))
                 {
-                    _keysToRemove.Add(new Tuple<RegistryKey, string>(key, subKeyName));
+                    _keysToRemove.Add(new RegistryMarker(key, subKeyName));
                 }
             }
         }
@@ -94,12 +94,12 @@ namespace Wunder.ClickOnceUninstaller
 
             foreach (var key in _keysToRemove)
             {
-                Console.WriteLine("Delete key {0} in {1}", key.Item2, key.Item1.Name);
+                Console.WriteLine("Delete key {0} in {1}", key.Parent, key.ItemName);
             }
 
             foreach (var value in _valuesToRemove)
             {
-                Console.WriteLine("Delete value {0} in {1}", value.Item2, value.Item1.Name);
+                Console.WriteLine("Delete value {0} in {1}", value.Parent, value.ItemName);
             }
 
             Console.WriteLine();
@@ -112,12 +112,12 @@ namespace Wunder.ClickOnceUninstaller
 
             foreach (var key in _keysToRemove)
             {
-                key.Item1.DeleteSubKeyTree(key.Item2);
+                key.Parent.DeleteSubKeyTree(key.ItemName);
             }
 
             foreach (var value in _valuesToRemove)
             {
-                value.Item1.DeleteValue(value.Item2);
+                value.Parent.DeleteValue(value.ItemName);
             }
         }
 
@@ -128,6 +128,19 @@ namespace Wunder.ClickOnceUninstaller
 
             _keysToRemove = null;
             _valuesToRemove = null;
+        }
+
+        private class RegistryMarker
+        {
+            public RegistryMarker(RegistryKey key, string name)
+            {
+                Parent = key;
+                ItemName = name;
+            }
+
+            public RegistryKey Parent { get; private set; }
+
+            public string ItemName { get; private set; }
         }
     }
 }
