@@ -28,7 +28,7 @@ namespace Wunder.ClickOnceUninstaller
 
             var steps = new List<IUninstallStep>
                             {
-                                new RemoveFiles(_registry),
+                                new RemoveFiles(),
                                 new RemoveStartMenuEntry(uninstallInfo),
                                 new RemoveRegistryKeys(_registry, uninstallInfo),
                                 new RemoveUninstallEntry(uninstallInfo)

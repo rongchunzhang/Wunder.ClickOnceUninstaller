@@ -6,24 +6,16 @@ namespace Wunder.ClickOnceUninstaller
 {
     public class RemoveFiles : IUninstallStep
     {
-        private readonly ClickOnceRegistry _registry;
+        private string _clickOnceFolder;
         private List<string> _foldersToRemove;
         private List<string> _filesToRemove;
 
-        public RemoveFiles(ClickOnceRegistry registry)
-        {
-            _registry = registry;
-        }
-
         public void Prepare(List<string> componentsToRemove)
         {
-            // sanity check
-            if (string.IsNullOrEmpty(_registry.ClickOnceFolder) ||
-                !_registry.ClickOnceFolder.StartsWith(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)))
-                throw new ArgumentException("Invalid ClickOnce folder: " + _registry.ClickOnceFolder);
+            _clickOnceFolder = FindClickOnceFolder();
 
             _foldersToRemove = new List<string>();
-            foreach (var directory in Directory.GetDirectories(_registry.ClickOnceFolder))
+            foreach (var directory in Directory.GetDirectories(_clickOnceFolder))
             {
                 if (componentsToRemove.Contains(Path.GetFileName(directory)))
                 {
@@ -32,7 +24,7 @@ namespace Wunder.ClickOnceUninstaller
             }
 
             _filesToRemove = new List<string>();
-            foreach (var file in Directory.GetFiles(Path.Combine(_registry.ClickOnceFolder, "manifests")))
+            foreach (var file in Directory.GetFiles(Path.Combine(_clickOnceFolder, "manifests")))
             {
                 if (componentsToRemove.Contains(Path.GetFileNameWithoutExtension(file)))
                 {
@@ -43,19 +35,19 @@ namespace Wunder.ClickOnceUninstaller
 
         public void PrintDebugInformation()
         {
-            if (_foldersToRemove == null)
+            if (string.IsNullOrEmpty(_clickOnceFolder) || !Directory.Exists(_clickOnceFolder))
                 throw new InvalidOperationException("Call Prepare() first.");
 
-            Console.WriteLine("Remove files from " + _registry.ClickOnceFolder);
+            Console.WriteLine("Remove files from " + _clickOnceFolder);
 
             foreach (var folder in _foldersToRemove)
             {
-                Console.WriteLine("Delete folder " + folder.Substring(_registry.ClickOnceFolder.Length + 1));
+                Console.WriteLine("Delete folder " + folder.Substring(_clickOnceFolder.Length + 1));
             }
 
             foreach (var file in _filesToRemove)
             {
-                Console.WriteLine("Delete file " + file.Substring(_registry.ClickOnceFolder.Length + 1));
+                Console.WriteLine("Delete file " + file.Substring(_clickOnceFolder.Length + 1));
             }
 
             Console.WriteLine();
@@ -63,7 +55,7 @@ namespace Wunder.ClickOnceUninstaller
 
         public void Execute()
         {
-            if (_foldersToRemove == null)
+            if (string.IsNullOrEmpty(_clickOnceFolder) || !Directory.Exists(_clickOnceFolder))
                 throw new InvalidOperationException("Call Prepare() first.");
 
             foreach (var folder in _foldersToRemove)
@@ -81,6 +73,28 @@ namespace Wunder.ClickOnceUninstaller
             {
                 File.Delete(file);
             }
+        }
+
+        private string FindClickOnceFolder()
+        {
+            var apps20Folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Apps\2.0");
+            if (!Directory.Exists(apps20Folder)) throw new ArgumentException("Could not find ClickOnce folder");
+
+            foreach (var subFolder in Directory.GetDirectories(apps20Folder))
+            {
+                if ((Path.GetFileName(subFolder) ?? string.Empty).Length == 12)
+                {
+                    foreach (var subSubFolder in Directory.GetDirectories(subFolder))
+                    {
+                        if ((Path.GetFileName(subSubFolder) ?? string.Empty).Length == 12)
+                        {
+                            return subSubFolder;
+                        }
+                    }
+                }
+            }
+
+            throw new ArgumentException("Could not find ClickOnce folder");
         }
 
         public void Dispose()

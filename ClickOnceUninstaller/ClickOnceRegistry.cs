@@ -9,13 +9,11 @@ namespace Wunder.ClickOnceUninstaller
     {
         public const string ComponentsRegistryPath = @"Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\Components";
         public const string MarksRegistryPath = @"Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\SideBySide\2.0\Marks";
-        public const string ClickOnceFolderRegistryPath = @"Software\Classes\Software\Microsoft\Windows\CurrentVersion\Deployment\ClickOnce35SP1Update";
         
         public ClickOnceRegistry()
         {
             ReadComponents();
             ReadMarks();
-            ReadClickOnceFolder();
         }
 
         private void ReadComponents()
@@ -78,14 +76,6 @@ namespace Wunder.ClickOnceUninstaller
             }
         }
 
-        private void ReadClickOnceFolder()
-        {
-            var key = Registry.CurrentUser.OpenSubKey(ClickOnceFolderRegistryPath);
-            if (key == null) return;
-
-            ClickOnceFolder = ((string) key.GetValue("Hits")).Trim();
-        }
-
         public class RegistryKey
         {
             public string Key { get; set; }
@@ -120,7 +110,5 @@ namespace Wunder.ClickOnceUninstaller
         public List<Component> Components { get; set; }
 
         public List<Mark> Marks { get; set; }
-
-        public string ClickOnceFolder { get; set; }
     }
 }
