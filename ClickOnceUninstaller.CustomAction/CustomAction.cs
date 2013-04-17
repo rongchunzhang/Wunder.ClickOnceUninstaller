@@ -5,22 +5,28 @@ namespace Wunder.ClickOnceUninstaller
 {
     public class CustomActions
     {
-        const string AppName = "Wunderlist";
-
         [CustomAction]
         public static ActionResult UninstallClickOnce(Session session)
         {
             session.Log("Begin to uninstall ClickOnce deployment");
 
+            var appName = session["CLICKONCEAPPNAME"];
+            if (string.IsNullOrEmpty(appName))
+            {
+                session.Log("Please set property CLICKONCEAPPNAME.");
+                return ActionResult.Failure;
+            }
+
             try
             {
-                var uninstallInfo = UninstallInfo.Find(AppName);
+                var uninstallInfo = UninstallInfo.Find(appName);
                 if (uninstallInfo == null)
                 {
-                    session.Log("No uninstall information found for " + AppName);
+                    session.Log("No uninstall information found for " + appName);
                     return ActionResult.NotExecuted;
                 }
 
+                session.Log("Uninstalling " + appName);
                 var uninstaller = new Uninstaller();
                 uninstaller.Uninstall(uninstallInfo);
             }
