@@ -1,4 +1,5 @@
-﻿using Microsoft.Deployment.WindowsInstaller;
+﻿using System;
+using Microsoft.Deployment.WindowsInstaller;
 
 namespace Wunder.ClickOnceUninstaller
 {
@@ -11,17 +12,22 @@ namespace Wunder.ClickOnceUninstaller
         {
             session.Log("Begin to uninstall ClickOnce deployment");
 
-            var uninstallInfo = UninstallInfo.Find(AppName);
+            try
+            {
+                var uninstallInfo = UninstallInfo.Find(AppName);
+                if (uninstallInfo == null)
+                {
+                    session.Log("No uninstall information found for " + AppName);
+                    return ActionResult.NotExecuted;
+                }
 
-            if (uninstallInfo == null)
-            {
-                session.Log("No uninstall information found for " + AppName);
-                return ActionResult.NotExecuted;
-            }
-            else
-            {
                 var uninstaller = new Uninstaller();
                 uninstaller.Uninstall(uninstallInfo);
+            }
+            catch (Exception ex)
+            {
+                session.Log("ERROR in ClickOnceUninstaller custom action:\n {0}", ex.ToString());
+                return ActionResult.Failure;
             }
 
             return ActionResult.Success;
