@@ -17,9 +17,9 @@ The uninstaller can be used programmatically as .NET library, through a command 
 
 The included custom action for WiX is based on the .NET Framework 3.0 which is already shipped with Windows Vista or higher. 
 
-## How?
+### How?
 
-.NET
+##### .NET
 
     var uninstallInfo = UninstallInfo.Find("Application Name");
     if (uninstallInfo == null)
@@ -28,11 +28,11 @@ The included custom action for WiX is based on the .NET Framework 3.0 which is a
         uninstaller.Uninstall(uninstallInfo);
     }
 
-Command-line
+##### Command-line
 
     ClickOnceUninstaller.exe "Application Name"
 
-WiX
+##### WiX
 
     <Property Id="CLICKONCEAPPNAME" Value="Application Name" />
     
