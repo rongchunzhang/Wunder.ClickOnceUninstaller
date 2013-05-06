@@ -16,3 +16,40 @@ It automatically resolves dependencies between installed components and removes 
 The uninstaller can be used programmatically as .NET library, through a command line interface and as custom action for a WiX setup package. 
 
 The included custom action for WiX is based on the .NET Framework 3.0 which is already shipped with Windows Vista or higher. 
+
+## How?
+
+.NET
+
+    var uninstallInfo = UninstallInfo.Find("Application Name");
+    if (uninstallInfo == null)
+    {
+        var uninstaller = new Uninstaller();
+        uninstaller.Uninstall(uninstallInfo);
+    }
+
+Command-line
+
+    ClickOnceUninstaller.exe "Application Name"
+
+WiX
+
+    <Property Id="CLICKONCEAPPNAME" Value="Application Name" />
+    
+    <CustomAction Id="UninstallClickOnce"
+                  BinaryKey="ClickOnceUninstaller"
+                  DllEntry="UninstallClickOnce"
+                  Return="ignore" />
+
+    <CustomAction Id="QuitRunningInstance"
+                  BinaryKey="WunderlistActions"
+                  DllEntry="QuitRunningInstance"
+                  Return="check" />
+
+    <InstallExecuteSequence>
+      <Custom Action="UninstallClickOnce" Before="InstallFinalize">NOT Installed</Custom>
+    </InstallExecuteSequence>
+
+## License
+
+The source code is available under the [MIT license](http://opensource.org/licenses/mit-license.php).
